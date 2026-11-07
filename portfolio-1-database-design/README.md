@@ -27,7 +27,7 @@ ORDER BY table_name, constraint_type;
 
 **Evidence**
 
-![Database Tables and Constraints](evidence/01-database-tables-and-constraints.png)
+![Database Tables and Constraints](evidence/01 database table and constraints.png)
 
 **Further Explanation:** This query displays the CareBridge database tables and their constraints, which help maintain data accuracy and integrity.
 
@@ -55,7 +55,7 @@ JOIN prescriptionitems pi
 
 **Evidence**
 
-![Prescription JOIN](evidence/02-prescription-join.png)
+![Prescription JOIN](evidence/02 prescription join.png)
 
 **Further Explanation:** The JOIN combines related records to display each patient's medication, dosage, frequency, duration and prescribing doctor.
 
@@ -80,7 +80,7 @@ INNER JOIN labtests AS lt
 
 **Evidence**
 
-![Laboratory JOIN](evidence/03-laboratory-join.png)
+![Laboratory JOIN](evidence/03 Laboratory-join.png)
 
 **Further Explanation:** This query connects patient records with laboratory tests to display the requested test, its status and available results.
 
@@ -102,7 +102,7 @@ WHERE conname IN (
 
 **Evidence**
 
-![Appointment Overlap Constraints](evidence/04-appointment-overlap.png)
+![Appointment Overlap Constraints](evidence/04 appointment-overlap.png)
 
 **Further Explanation:** These constraints prevent patients and doctors from being assigned overlapping appointments, helping to avoid scheduling conflicts.
 
@@ -128,7 +128,7 @@ ORDER BY event_object_table, trigger_name;
 
 **Evidence**
 
-![Trigger Protection](evidence/05-trigger-protection.png)
+![Trigger Protection](evidence/05 Trigger-protection.png)
 
 **Further Explanation:** These triggers enforce hospital rules by ensuring prescriptions contain medication items and protecting completed laboratory orders from deletion.
 
