@@ -190,16 +190,16 @@ Together, the evidence demonstrates how PostgreSQL evaluates query execution str
 
 ### Evidence Files
 
-![01 Appointment Query](evidence/01-appointment-query.png)
+![01 Appointment Query](Evidence/01-appointment-query.png)
 
-![02 Initial Execution Plan](evidence/02-initial-execution-plan.png)
+![02 Initial Execution Plan](Evidence/02-initial-execution-plan.png)
 
-![03 Indexed Execution Plan](evidence/03-indexed-execution-plan.png)
+![03 Indexed Execution Plan](Evidence/03-indexed-execution-plan.png)
 
-![04 Index Verification](evidence/04-index-verification.png)
+![04 Index Verification](Evidence/04-index-verification.png)
 
-![05 Reproduced Sequential Scan](evidence/05-reproduced-sequential-scan.png)
+![05 Reproduced Sequential Scan](Evidence/05-reproduced-sequential-scan.png)
 
-![06 Performance Before Indexing](evidence/06-performance-before-index.png)
+![06 Performance Before Indexing](Evidence/06-performance-before-index.png)
 
-![07 Performance After Indexing](evidence/07-performance-after-index.png)
+![07 Performance After Indexing](Evidence/07-performance-after-index.png)
