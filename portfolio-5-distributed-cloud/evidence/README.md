@@ -5,13 +5,6 @@
 **Screenshot:** `01-carebridge-distributed-cloud-architecture.png`
 
 This screenshot presents the proposed CareBridge distributed and cloud database architecture. It illustrates how hospital users interact with the primary PostgreSQL database and how database replication supports a standby replica for disaster recovery.
-# Portfolio 5 Evidence
-
-## 1. Proposed Distributed and Cloud Database Architecture
-
-**Screenshot:** `01-carebridge-distributed-cloud-architecture.png`
-
-This screenshot presents the proposed CareBridge distributed and cloud database architecture. It illustrates how hospital users interact with the primary PostgreSQL database and how replication supports a standby replica for disaster recovery.
 
 ## 2. Primary Server Replication Status
 
