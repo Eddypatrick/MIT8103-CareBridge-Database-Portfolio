@@ -11,6 +11,7 @@ As the hospital expands its services across multiple branches, a distributed and
 This exercise proposes a cloud-based PostgreSQL architecture for CareBridge, focusing on database replication, availability, consistency, scalability and security.
 
 ### 2. Proposed Distributed Database Architecture
+
 The proposed architecture consists of the following components:
 
 ```mermaid
@@ -19,8 +20,9 @@ flowchart TD
     B -->|Data Replication| C[Standby Database Replica]
     C --> D[Disaster Recovery]
     B --> E[Multiple Hospital Branches]
+```
 
+**Figure 1: Proposed distributed and cloud database architecture for CareBridge.**
 
- 
-
-This approach improves resilience and supports database availability, helping CareBridge maintain access to important hospital information.
+The primary database handles the hospital's main transactions, while replication maintains a separate copy of the database on a standby server. The standby replica supports recovery if the primary database becomes unavailable. The architecture also provides a foundation for supporting multiple hospital branches.
+  
