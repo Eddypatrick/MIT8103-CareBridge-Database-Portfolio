@@ -81,3 +81,23 @@ CareBridge can initially use a single primary database with a standby replica. A
 For future horizontal scaling, patient records and operational data could be distributed across hospital branches using a carefully designed sharding strategy. This would require additional application logic and coordination to maintain data consistency.
 
 Cloud deployment would also require secure network configuration, encryption, role-based access control and regular backup testing.
+
+### 6. Security and Risk Management
+
+CareBridge handles sensitive patient information, making database security essential in both local and cloud environments.
+
+The proposed architecture will adopt the following security measures:
+
+- **Authentication:** Require verified user credentials before granting database access.
+- **Role-Based Access Control (RBAC):** Assign permissions according to staff responsibilities. For example, doctors, laboratory personnel and receptionists should have different access privileges.
+- **Encryption:** Protect patient information during transmission and while stored in the cloud.
+- **Multi-Factor Authentication (MFA):** Add another layer of protection for administrative and privileged accounts.
+- **Backup and Recovery:** Maintain regular backups and periodically test database restoration procedures.
+- **Monitoring and Auditing:** Record database access and administrative activities to identify suspicious behaviour.
+- **Network Security:** Restrict database access to trusted networks and authorised application servers.
+
+Potential risks include network outages, replication delays, unauthorised access, cloud service disruptions and accidental data loss.
+
+These risks can be reduced through secure configuration, continuous monitoring, tested recovery procedures and appropriate access management.
+
+CareBridge must also ensure that its handling of patient information complies with applicable Nigerian data protection requirements, including the Nigeria Data Protection Act (NDPA) 2023.
