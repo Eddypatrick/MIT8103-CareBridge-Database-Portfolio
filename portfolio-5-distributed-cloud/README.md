@@ -26,3 +26,18 @@ flowchart TD
 
 The primary database handles the hospital's main transactions, while replication maintains a separate copy of the database on a standby server. The standby replica supports recovery if the primary database becomes unavailable. The architecture also provides a foundation for supporting multiple hospital branches.
   
+### 3. Database Replication and Availability
+
+Database replication involves maintaining copies of data across multiple database servers. In the proposed CareBridge architecture, the primary PostgreSQL database sends changes to a standby replica.
+
+PostgreSQL supports two major replication approaches:
+
+**Synchronous Replication:** The primary database waits for confirmation that changes have been received by the standby server before confirming a transaction. This provides stronger data consistency but may increase transaction latency.
+
+**Asynchronous Replication:** The primary database confirms transactions without waiting for the standby server to acknowledge every change. This can improve transaction performance, although the replica may temporarily lag behind the primary database.
+
+For CareBridge, synchronous replication may be considered for critical patient and prescription records where minimising data loss is important. Asynchronous replication may be suitable where performance and network latency are greater concerns.
+
+The standby replica can support disaster recovery if the primary database fails. However, automatic failover requires additional configuration and monitoring.
+
+This approach improves resilience and supports database availability, helping CareBridge maintain access to important hospital information.
