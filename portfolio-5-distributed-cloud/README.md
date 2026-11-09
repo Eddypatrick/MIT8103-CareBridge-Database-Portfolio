@@ -61,3 +61,23 @@ The following measures will support consistency:
 For critical patient information, the primary database remains the authoritative source. Read operations against a standby replica should account for possible replication delays, particularly when asynchronous replication is used.
 
 These measures help maintain reliable patient information and reduce inconsistencies across CareBridge operations.
+
+### 5. Cloud Database Deployment and Scalability
+
+CareBridge can deploy its PostgreSQL database using Amazon Relational Database Service (Amazon RDS) for PostgreSQL.
+
+Amazon RDS is a managed database service that provides database hosting, automated backups, monitoring and options for high availability.
+
+The proposed cloud deployment offers the following benefits:
+
+- **Scalability:** Database resources can be increased as patient records and hospital transactions grow.
+- **Managed backups:** Automated backups support data recovery.
+- **High availability:** Multi-AZ deployment can maintain a standby database in another Availability Zone and support failover.
+- **Accessibility:** Authorised users can securely access the database from different hospital branches.
+- **Maintenance:** Managed database services reduce the administrative burden of routine database operations.
+
+CareBridge can initially use a single primary database with a standby replica. As the hospital expands, additional read replicas can help distribute read workloads.
+
+For future horizontal scaling, patient records and operational data could be distributed across hospital branches using a carefully designed sharding strategy. This would require additional application logic and coordination to maintain data consistency.
+
+Cloud deployment would also require secure network configuration, encryption, role-based access control and regular backup testing.
