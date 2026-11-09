@@ -123,3 +123,13 @@ PostgreSQL replication can support database resilience, while cloud services suc
 Although this exercise presents a proposed architecture rather than a live cloud deployment, it demonstrates how distributed database concepts can be applied to a practical hospital management system.
 
 The design also highlights the importance of balancing consistency, availability, performance and security when planning a distributed database environment.
+
+### 9. References
+
+1. Miva Open University. (2026). *MIT 8103: Advanced Database Systems, Study Session 2, Lecture 2: Distributed Databases*. Course lecture materials.
+
+2. Miva Open University. (2026). *MIT 8103: Advanced Database Systems, Study Session 2, Lecture 3: Cloud Databases*. Course lecture materials.
+
+3. PostgreSQL Global Development Group. (n.d.). *High Availability, Load Balancing, and Replication*. https://www.postgresql.org/docs/current/high-availability.html
+
+4. Amazon Web Services. (n.d.). *Amazon RDS Documentation*. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html
