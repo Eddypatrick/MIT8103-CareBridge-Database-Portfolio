@@ -8,7 +8,7 @@ CareBridge Hospital Management System is a relational database solution develope
 
 As the hospital expands its services across multiple branches, a distributed and cloud-based database architecture can improve data availability, scalability, disaster recovery and access to information.
 
-This exercise proposes a cloud-based PostgreSQL architecture for CareBridge, focusing on database replication, availability, consistency, scalability and security.
+This exercise examines how distributed and cloud database concepts can be applied to CareBridge, focusing on database replication, availability, consistency, scalability and security.
 
 ### 2. Proposed Distributed Database Architecture
 
@@ -25,7 +25,7 @@ flowchart TD
 **Figure 1: Proposed distributed and cloud database architecture for CareBridge.**
 
 The primary database handles the hospital's main transactions, while replication maintains a separate copy of the database on a standby server. The standby replica supports recovery if the primary database becomes unavailable. The architecture also provides a foundation for supporting multiple hospital branches.
-  
+
 ### 3. Database Replication and Availability
 
 Database replication involves maintaining copies of data across multiple database servers. In the proposed CareBridge architecture, the primary PostgreSQL database sends changes to a standby replica.
@@ -41,6 +41,14 @@ For CareBridge, synchronous replication may be considered for critical patient a
 The standby replica can support disaster recovery if the primary database fails. However, automatic failover requires additional configuration and monitoring.
 
 This approach improves resilience and supports database availability, helping CareBridge maintain access to important hospital information.
+
+#### 3.1 Local PostgreSQL Streaming Replication Demonstration
+
+Two PostgreSQL 16 instances were configured locally, with the primary on port 5432 and the standby on port 5433. The `pg_basebackup` utility was used to create the standby database cluster.
+
+Streaming replication was verified using PostgreSQL monitoring functions. A test record inserted into the primary CareBridge database was successfully retrieved from the standby, confirming that replication was working.
+
+**Scope:** This practical demonstration was conducted on one computer. It was not a deployment across separate physical servers or a live cloud environment.
 
 ### 4. Data Consistency Across Hospital Branches
 
@@ -120,7 +128,7 @@ The proposed distributed and cloud database architecture provides CareBridge Hos
 
 PostgreSQL replication can support database resilience, while cloud services such as Amazon RDS provide managed infrastructure and high-availability options.
 
-Although this exercise presents a proposed architecture rather than a live cloud deployment, it demonstrates how distributed database concepts can be applied to a practical hospital management system.
+Although this exercise presents a proposed cloud architecture rather than a live cloud deployment, the practical replication demonstration shows how distributed database concepts can be applied to a hospital management system.
 
 The design also highlights the importance of balancing consistency, availability, performance and security when planning a distributed database environment.
 
@@ -133,3 +141,4 @@ The design also highlights the importance of balancing consistency, availability
 3. PostgreSQL Global Development Group. (n.d.). *High Availability, Load Balancing, and Replication*. https://www.postgresql.org/docs/current/high-availability.html
 
 4. Amazon Web Services. (n.d.). *Amazon RDS Documentation*. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html
+
