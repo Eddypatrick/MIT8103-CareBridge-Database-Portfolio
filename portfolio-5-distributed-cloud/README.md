@@ -101,3 +101,25 @@ Potential risks include network outages, replication delays, unauthorised access
 These risks can be reduced through secure configuration, continuous monitoring, tested recovery procedures and appropriate access management.
 
 CareBridge must also ensure that its handling of patient information complies with applicable Nigerian data protection requirements, including the Nigeria Data Protection Act (NDPA) 2023.
+
+### 7. Recommendations
+
+Based on the proposed architecture, the following recommendations are made for CareBridge:
+
+1. Adopt a managed PostgreSQL cloud service to support database scalability and reduce infrastructure maintenance.
+2. Configure database replication to maintain a standby copy of critical hospital records.
+3. Use appropriate replication settings based on the hospital's consistency and performance requirements.
+4. Implement automated backups and regularly test disaster recovery procedures.
+5. Apply role-based access control, encryption and multi-factor authentication to protect patient information.
+6. Consider branch-based sharding only when the volume of data and number of hospital branches justify the additional complexity.
+7. Monitor database performance, replication lag and availability continuously.
+
+### 8. Conclusion
+
+The proposed distributed and cloud database architecture provides CareBridge Hospital Management System with a foundation for improved scalability, availability, data protection and disaster recovery.
+
+PostgreSQL replication can support database resilience, while cloud services such as Amazon RDS provide managed infrastructure and high-availability options.
+
+Although this exercise presents a proposed architecture rather than a live cloud deployment, it demonstrates how distributed database concepts can be applied to a practical hospital management system.
+
+The design also highlights the importance of balancing consistency, availability, performance and security when planning a distributed database environment.
