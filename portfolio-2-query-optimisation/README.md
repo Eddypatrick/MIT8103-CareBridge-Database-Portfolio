@@ -194,7 +194,7 @@ Together, the evidence demonstrates how PostgreSQL evaluates query execution str
 
 ![02 Initial Execution Plan](Evidence/02-initial-execution-plan.png)
 
-![03 Indexed Execution Plan](Evidence/03-indexed-execution-plan.png)
+![03 Indexed Execution Plan](<Evidence/03- indexed-execution-plan.png>)
 
 ![04 Index Verification](Evidence/04-index-verification.png)
 
