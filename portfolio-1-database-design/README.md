@@ -142,7 +142,7 @@ ORDER BY table_name, constraint_type;
 
 **Evidence**
 
-![Database Tables and Constraints](evidence/01 database table and constraints png.png)
+![Database Tables and Constraints](<evidence/01 database table and constraints png.png>)
 
 **Further Explanation:** This query displays the CareBridge database tables and their constraints, which help maintain data accuracy and integrity.
 
@@ -170,7 +170,7 @@ JOIN prescriptionitems pi
 
 **Evidence**
 
-![Prescription JOIN](evidence/02 Prescription-Join.png)
+![Prescription JOIN](<evidence/02 Prescription-Join.png>)
 
 **Further Explanation:** The JOIN combines related records to display each patient's medication, dosage, frequency, duration and prescribing doctor.
 
@@ -195,7 +195,7 @@ INNER JOIN labtests AS lt
 
 **Evidence**
 
-![Laboratory JOIN](evidence/03Laboratory -Join.png)
+![Laboratory JOIN](<evidence/03Laboratory -Join.png>)
 
 **Further Explanation:** This query connects patient records with laboratory tests to display the requested test, its status and available results.
 
@@ -217,7 +217,7 @@ WHERE conname IN (
 
 **Evidence**
 
-![Appointment Overlap Constraints](evidence/04 appointment -overlap.png)
+![Appointment Overlap Constraints](<evidence/04 appointment -overlap.png>)
 
 **Further Explanation:** These constraints prevent patients and doctors from being assigned overlapping appointments, helping to avoid scheduling conflicts.
 
@@ -243,9 +243,18 @@ ORDER BY event_object_table, trigger_name;
 
 **Evidence**
 
-![Trigger Protection](evidence/05 Trigger -ptotection.png)
+![Trigger Protection](<evidence/05 Trigger -ptotection.png>)
 
 **Further Explanation:** These triggers enforce hospital rules by ensuring prescriptions contain medication items and protecting completed laboratory orders from deletion.
+
+## 7. SQL Implementation Files
+
+The SQL implementation is organised into two separate files so that database creation and integrity testing can be reviewed independently.
+
+- **[CareBridge Database Setup Script](CareBridge_Portfolio1_Database_Design.sql):** Creates the eight tables in dependency order, defines primary and foreign keys, unique and check constraints, appointment-overlap protection and integrity triggers, then inserts valid sample records. It includes verification queries.
+- **[CareBridge Integrity Tests](CareBridge_Portfolio1_Integrity_Tests.sql):** Contains inspection queries and separate, commented test statements for duplicate registration numbers, invalid foreign keys, invalid appointment times, overlapping appointments, prescriptions without medication items and deletion of completed laboratory orders.
+
+**Important:** The setup script is intended for a new, empty database. It should not be run against an existing CareBridge database because the tables and constraints already exist. The negative test statements are commented out and should be executed individually in a separate test database or test copy.
 
 ## Tools and Technologies
 
