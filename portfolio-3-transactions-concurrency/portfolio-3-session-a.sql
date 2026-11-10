@@ -39,7 +39,7 @@ WHERE demo_id = 1;
 ROLLBACK;
 
 
--- SECTION 3: Verify the rollback
+-- SECTION 3A: Verify the rollback
 
 SELECT demo_id, patient_name, appointment_status
 FROM appointment_transaction_demo
