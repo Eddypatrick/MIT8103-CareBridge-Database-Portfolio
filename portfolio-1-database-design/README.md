@@ -256,9 +256,22 @@ The SQL implementation is organised into two separate files so that database cre
 
 **Important:** The setup script is intended for a new, empty database. It should not be run against an existing CareBridge database because the tables and constraints already exist. The negative test statements are commented out and should be executed individually in a separate test database or test copy.
 
+## 8. Test Database Integrity Evidence
+
+The setup script and integrity rules were also tested in a separate PostgreSQL database named `carebridge_test`. This kept the negative tests separate from the main CareBridge database.
+
+The test evidence demonstrates:
+
+- Successful creation of all eight tables and retrieval of related prescription and laboratory records using JOIN queries.
+- Rejection of duplicate hospital registration numbers, invalid patient foreign keys and invalid appointment time ranges.
+- Prevention of overlapping appointments for both patients and doctors.
+- Trigger protection against committing prescriptions without medication items and deleting completed laboratory orders.
+- Final record counts confirming that the original sample data remained unchanged after testing.
+
+The [Test Database Evidence README](evidence/Test%20Database%20Evidence/README.md) describes all 11 screenshots and links to each image.
+
 ## Tools and Technologies
 
 - PostgreSQL 16
 - pgAdmin 4
 - Mermaid ER diagram
-
