@@ -66,8 +66,7 @@ Implementation evidence includes:
 
 - MongoDB Compass showing the `carebridge_nosql` database and `patients` collection.
 - The inserted patient document with embedded appointment and laboratory information.
-- The MongoDB Shell commands used to insert, count and retrieve documents.
-- The `carebridge-nosql.js` implementation file.
+- The `carebridge-nosql.js` implementation file, which contains the MongoDB Shell commands used to insert, count and retrieve documents.
 
 ## 8. Conclusion
 
