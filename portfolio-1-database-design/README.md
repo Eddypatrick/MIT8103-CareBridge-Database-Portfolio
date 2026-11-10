@@ -1,6 +1,121 @@
 # Portfolio 1: Database Design and Modelling
 
-## 1. Database Tables and Constraints
+## 1. CareBridge Database Design and ER Diagram
+
+CareBridge is a small hospital-management database prototype developed to demonstrate how relational database design can support more organised patient, appointment, prescription and laboratory information management. It is a practical demonstration using sample records, not a fully deployed hospital system.
+
+The database contains eight related tables:
+
+- `departments`
+- `doctors`
+- `patients`
+- `appointments`
+- `prescriptions`
+- `prescriptionitems`
+- `labtests`
+- `laborders`
+
+### Entity-Relationship Diagram
+
+The following ER diagram is based on the table columns and foreign-key relationships verified in the PostgreSQL database.
+
+```mermaid
+erDiagram
+    DEPARTMENTS {
+        int department_id PK
+        varchar department_name UK
+    }
+
+    DOCTORS {
+        int doctor_id PK
+        varchar doctor_name
+        int department_id FK
+    }
+
+    PATIENTS {
+        int patient_id PK
+        varchar patient_name
+        date date_of_birth
+        varchar gender
+        varchar phone_number UK
+        varchar hospital_registration_no UK
+    }
+
+    APPOINTMENTS {
+        int appointment_id PK
+        int patient_id FK
+        int doctor_id FK
+        timestamp appointment_datetime
+        varchar status
+        timestamp appointment_end_datetime
+    }
+
+    PRESCRIPTIONS {
+        int prescription_id PK
+        int patient_id FK
+        int doctor_id FK
+        date prescription_date
+    }
+
+    PRESCRIPTIONITEMS {
+        int prescription_item_id PK
+        int prescription_id FK
+        varchar medication_name
+        varchar dosage
+        varchar frequency
+        varchar duration
+    }
+
+    LABTESTS {
+        int lab_test_id PK
+        varchar test_name UK
+        varchar test_description
+    }
+
+    LABORDERS {
+        int lab_order_id PK
+        int patient_id FK
+        int lab_test_id FK
+        timestamp order_date
+        varchar status
+        text result
+    }
+
+    DEPARTMENTS ||--o{ DOCTORS : has
+    DOCTORS ||--o{ APPOINTMENTS : attends
+    PATIENTS ||--o{ APPOINTMENTS : books
+    PATIENTS ||--o{ PRESCRIPTIONS : receives
+    DOCTORS ||--o{ PRESCRIPTIONS : issues
+    PRESCRIPTIONS ||--o{ PRESCRIPTIONITEMS : contains
+    PATIENTS ||--o{ LABORDERS : has
+    LABTESTS ||--o{ LABORDERS : requested_as
+```
+
+### Explanation of the entities and relationships
+
+- **Departments and Doctors:** One department can have multiple doctors. Each doctor references a department through `department_id`.
+- **Doctors and Appointments:** A doctor can have multiple appointments. Each appointment references the doctor assigned to it.
+- **Patients and Appointments:** A patient can have multiple appointments. Each appointment references the patient attending it.
+- **Patients and Prescriptions:** A patient can receive multiple prescriptions. Each prescription references its patient.
+- **Doctors and Prescriptions:** A doctor can issue multiple prescriptions. Each prescription references the doctor who issued it.
+- **Prescriptions and PrescriptionItems:** One prescription can contain multiple medication items. Each item references its prescription through `prescription_id`.
+- **Patients and LabOrders:** A patient can have multiple laboratory orders. Each order references the patient.
+- **LabTests and LabOrders:** A type of laboratory test can be used in multiple orders. Each order references a test in the `labtests` table.
+
+The symbols in the Mermaid diagram represent relationship cardinality. `||` means exactly one, while `o{` means zero or many. For example, one department can have zero or many doctors, while each doctor is linked to one department.
+
+### Keys and integrity constraints
+
+- **Primary keys (PK):** Each of the eight tables has a primary key that uniquely identifies its records.
+- **Foreign keys (FK):** The eight foreign-key constraints connect related records and help maintain referential integrity.
+- **Unique constraints:** Department names, laboratory test names, patient phone numbers and hospital registration numbers are protected against duplicate values.
+- **Appointment uniqueness:** The `unique_doctor_appointment` constraint applies to the combination of `doctor_id` and `appointment_datetime`, preventing the same doctor from having two appointments with the same start time.
+- **Check constraint:** `valid_appointment_time` ensures that `appointment_end_datetime` is later than `appointment_datetime`.
+- **Additional appointment protection:** The database also has overlap-prevention constraints for patient and doctor appointments.
+
+The appointment and laboratory-order tables store event dates and times. The laboratory-order date defaults to `CURRENT_TIMESTAMP`, while the prescription date defaults to `CURRENT_DATE`. General `created_at` and `updated_at` audit columns have not been added to the current schema.
+
+## 2. Database Tables and Constraints
 
 **SQL Code**
 
@@ -27,11 +142,11 @@ ORDER BY table_name, constraint_type;
 
 **Evidence**
 
-![Database Tables and Constraints](evidence/01 database table and constraints.png)
+![Database Tables and Constraints](evidence/01 database table and constraints png.png)
 
 **Further Explanation:** This query displays the CareBridge database tables and their constraints, which help maintain data accuracy and integrity.
 
-## 2. Prescription Details Using JOIN
+## 3. Prescription Details Using JOIN
 
 **SQL Code**
 
@@ -55,11 +170,11 @@ JOIN prescriptionitems pi
 
 **Evidence**
 
-![Prescription JOIN](evidence/02 prescription join.png)
+![Prescription JOIN](evidence/02 Prescription-Join.png)
 
 **Further Explanation:** The JOIN combines related records to display each patient's medication, dosage, frequency, duration and prescribing doctor.
 
-## 3. Laboratory Orders Using JOIN
+## 4. Laboratory Orders Using JOIN
 
 **SQL Code**
 
@@ -80,11 +195,11 @@ INNER JOIN labtests AS lt
 
 **Evidence**
 
-![Laboratory JOIN](evidence/03 Laboratory-join.png)
+![Laboratory JOIN](evidence/03Laboratory -Join.png)
 
 **Further Explanation:** This query connects patient records with laboratory tests to display the requested test, its status and available results.
 
-## 4. Appointment-Overlap Constraints
+## 5. Appointment-Overlap Constraints
 
 **SQL Code**
 
@@ -102,11 +217,11 @@ WHERE conname IN (
 
 **Evidence**
 
-![Appointment Overlap Constraints](evidence/04 appointment-overlap.png)
+![Appointment Overlap Constraints](evidence/04 appointment -overlap.png)
 
 **Further Explanation:** These constraints prevent patients and doctors from being assigned overlapping appointments, helping to avoid scheduling conflicts.
 
-## 5. Trigger Protection
+## 6. Trigger Protection
 
 **SQL Code**
 
@@ -128,7 +243,7 @@ ORDER BY event_object_table, trigger_name;
 
 **Evidence**
 
-![Trigger Protection](evidence/05 Trigger-protection.png)
+![Trigger Protection](evidence/05 Trigger -ptotection.png)
 
 **Further Explanation:** These triggers enforce hospital rules by ensuring prescriptions contain medication items and protecting completed laboratory orders from deletion.
 
@@ -136,3 +251,5 @@ ORDER BY event_object_table, trigger_name;
 
 - PostgreSQL 16
 - pgAdmin 4
+- Mermaid ER diagram
+
