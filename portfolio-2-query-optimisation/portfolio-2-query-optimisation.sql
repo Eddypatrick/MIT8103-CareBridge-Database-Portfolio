@@ -34,7 +34,7 @@ SELECT
     TIMESTAMP '2026-01-01 08:00:00'
     + (n * INTERVAL '5 minutes')
 FROM generate_series(1, 100000) AS n;
-SELECT * FROM appointment_performance_test;
+-- Verify the number of simulated records without displaying all 100,000 rows.
 SELECT COUNT(*) AS total_test_appointments
 FROM appointment_performance_test;
 EXPLAIN ANALYZE
