@@ -11,8 +11,8 @@ INNER JOIN patients AS pt
     ON a.patient_id = pt.patient_id
 INNER JOIN doctors AS d
     ON a.doctor_id = d.doctor_id
-WHERE a.appointment_datetime >= TIMESTAMP '2026-11-07 00:00:00'
-  AND a.appointment_datetime < TIMESTAMP '2026-11-08 00:00:00'
+WHERE a.appointment_datetime >= TIMESTAMPTZ '2026-11-07 00:00:00 Africa/Lagos'
+  AND a.appointment_datetime < TIMESTAMPTZ '2026-11-08 00:00:00 Africa/Lagos'
 ORDER BY a.appointment_datetime;
 CREATE INDEX idx_appointments_datetime
 ON appointments (appointment_datetime);
