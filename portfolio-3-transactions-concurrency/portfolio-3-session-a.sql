@@ -76,7 +76,9 @@ SELECT demo_id, appointment_status
 FROM appointment_transaction_demo
 WHERE demo_id = 1;
 
--- Run the Session B update to Checked In and COMMIT.
+-- In Session B, run BOTH update transactions in order:
+-- 1. Set the status to Completed and COMMIT.
+-- 2. Set the status to Checked In and COMMIT.
 
 -- Second read
 SELECT demo_id, appointment_status
@@ -97,10 +99,12 @@ FROM appointment_transaction_demo
 WHERE demo_id = 1
 FOR UPDATE;
 
--- While this transaction remains open, run Session B
--- update to Under Review and COMMIT.
+-- While this transaction remains open, run the Session B
+-- update to Under Review. Session B will wait for the row lock.
 
--- After Session B completes, release the lock.
+-- COMMIT this Session A transaction to release the lock.
+-- Session B can then complete its UPDATE and COMMIT.
+
 COMMIT;
 
 
