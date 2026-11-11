@@ -45,9 +45,9 @@ erDiagram
         int appointment_id PK
         int patient_id FK
         int doctor_id FK
-        timestamp appointment_datetime
+        timestamptz appointment_datetime
         varchar status
-        timestamp appointment_end_datetime
+        timestamptz appointment_end_datetime
     }
 
     PRESCRIPTIONS {
@@ -76,7 +76,7 @@ erDiagram
         int lab_order_id PK
         int patient_id FK
         int lab_test_id FK
-        timestamp order_date
+        timestamptz order_date
         varchar status
         text result
     }
@@ -113,7 +113,7 @@ The symbols in the Mermaid diagram represent relationship cardinality. `||` mean
 - **Check constraint:** `valid_appointment_time` ensures that `appointment_end_datetime` is later than `appointment_datetime`.
 - **Additional appointment protection:** The database also has overlap-prevention constraints for patient and doctor appointments.
 
-The appointment and laboratory-order tables store event dates and times. The laboratory-order date defaults to `CURRENT_TIMESTAMP`, while the prescription date defaults to `CURRENT_DATE`. General `created_at` and `updated_at` audit columns have not been added to the current schema.
+The appointment start and end columns and the laboratory-order `order_date` column use PostgreSQL `TIMESTAMPTZ` so stored event times represent timezone-aware instants. Existing appointment and laboratory-order values were interpreted as Africa/Lagos local time during migration. The appointment overlap constraints use `tstzrange()` with the half-open range `'[)'`, allowing one appointment to begin exactly when another ends. The laboratory-order date defaults to `CURRENT_TIMESTAMP`. The prescription date remains `DATE` with a `CURRENT_DATE` default because it represents a calendar date rather than a time instant. General `created_at` and `updated_at` audit columns have not been added to the current schema.
 
 ## 2. Database Tables and Constraints
 
@@ -258,7 +258,7 @@ The SQL implementation is organised into two separate files so that database cre
 
 ## 8. Test Database Integrity Evidence
 
-The setup script and integrity rules were also tested in a separate PostgreSQL database named `carebridge_test`. This kept the negative tests separate from the main CareBridge database.
+The setup script and integrity rules were also tested in a separate PostgreSQL database named `carebridge_test`. This kept the negative tests separate from the main CareBridge database. The test database contains two laboratory-order sample records: Ada Nwosu's completed Malaria Test and Ibrahim Bello's pending Full Blood Count (with a `NULL` result). The live main `carebridge` database contains one laboratory order, and the pre-migration backup also contains one. These are separate database copies with different sample-data states; the pending test record was not present in the main database or its backup.
 
 The test evidence demonstrates:
 
