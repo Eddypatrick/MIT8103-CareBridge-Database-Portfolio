@@ -3,8 +3,6 @@
 ## Advanced Database Systems
 
 **Student Name:** Blessing Edet  
-**Student ID:** 301827012  
-**Matriculation Number:** 2025/A/MIT/0549  
 **Programme:** Master of Information Technology  
 **Institution:** Miva Open University  
 **Academic Session:** 2026/2027
@@ -26,6 +24,14 @@ The portfolio contains five practical activities:
 5. Distributed and Cloud Database Exercise
 
 Each portfolio folder contains relevant documentation, implementation files and supporting evidence of the work completed.
+
+## Portfolio Navigation
+
+1. [Portfolio 1: Database Design and Modelling](portfolio-1-database-design/README.md)
+2. [Portfolio 2: Query Processing and Optimisation](portfolio-2-query-optimisation/README.md)
+3. [Portfolio 3: Transactions and Concurrency](portfolio-3-transactions-concurrency/README.md)
+4. [Portfolio 4: NoSQL Database Implementation](portfolio-4-nosql/README.md)
+5. [Portfolio 5: Distributed and Cloud Database Exercise](portfolio-5-distributed-cloud/README.md)
 
 ## Tools and Technologies
 

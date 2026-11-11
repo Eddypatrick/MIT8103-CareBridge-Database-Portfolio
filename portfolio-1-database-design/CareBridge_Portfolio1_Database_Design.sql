@@ -56,7 +56,7 @@ CREATE TABLE appointments (
     CONSTRAINT no_overlapping_doctor_appointments
         EXCLUDE USING GIST (
             doctor_id WITH =,
-            tsrange(appointment_datetime, appointment_end_datetime, '[)') WITH &&
+            tstzrange(appointment_datetime, appointment_end_datetime, '[)') WITH &&
         )
 );
 

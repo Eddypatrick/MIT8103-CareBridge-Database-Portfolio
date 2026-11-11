@@ -115,6 +115,16 @@ The symbols in the Mermaid diagram represent relationship cardinality. `||` mean
 
 The appointment start and end columns and the laboratory-order `order_date` column use PostgreSQL `TIMESTAMPTZ` so stored event times represent timezone-aware instants. Existing appointment and laboratory-order values were interpreted as Africa/Lagos local time during migration. The appointment overlap constraints use `tstzrange()` with the half-open range `'[)'`, allowing one appointment to begin exactly when another ends. The laboratory-order date defaults to `CURRENT_TIMESTAMP`. The prescription date remains `DATE` with a `CURRENT_DATE` default because it represents a calendar date rather than a time instant. General `created_at` and `updated_at` audit columns have not been added to the current schema.
 
+## 1.1 Relational Normalisation
+
+The CareBridge relational model was organised to reduce unnecessary duplication and protect data integrity. Its design can be explained using the first three normal forms:
+
+- **First Normal Form (1NF):** Each table has a primary key, and each field stores a single value rather than a repeating list. Medication details are stored as separate rows in `prescriptionitems`, rather than placing several medicines in one field in `prescriptions`.
+- **Second Normal Form (2NF):** The tables use single-column primary keys, so there are no partial dependencies on part of a composite primary key. Attributes describing a doctor, patient or laboratory test are kept in their own tables and referenced through foreign keys.
+- **Third Normal Form (3NF):** Non-key attributes describe the key, the whole key and nothing but the key. For example, `department_name` is stored in `departments`, while `doctors` stores the related `department_id`; department details are not repeated for every doctor. Test descriptions are stored in `labtests`, not repeated in each laboratory order.
+
+The separate `prescriptions` and `prescriptionitems` tables allow one prescription to contain multiple medication items without repeating prescription-level details. This structure reduces update anomalies and makes relationships enforceable through foreign keys. This is an explanation of the logical design, not a claim that a formal normalisation tool was run.
+
 ## 2. Database Tables and Constraints
 
 **SQL Code**

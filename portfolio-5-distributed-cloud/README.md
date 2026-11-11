@@ -70,6 +70,20 @@ For critical patient information, the primary database remains the authoritative
 
 These measures help maintain reliable patient information and reduce inconsistencies across CareBridge operations.
 
+### 4.1 CAP Theorem: Design Considerations
+
+The CAP theorem describes a trade-off that becomes important when a distributed data system experiences a network partition. During such a partition, a distributed system cannot guarantee both strong consistency and full availability to every request.
+
+For CareBridge, this means the architecture must define how the system behaves if communication between a primary database and a replica or hospital branch is interrupted:
+
+- **Consistency:** Users should not receive conflicting or stale critical patient information. Routing critical reads and writes to the primary database, or waiting for synchronous replication acknowledgement, can support stronger consistency, although availability or response time may be affected during a network problem.
+- **Availability:** Hospital staff need continued access to services. An asynchronous replica can support read workloads and recovery planning, but it may lag behind the primary database. Allowing service to continue from a lagging replica can mean users see older data.
+- **Partition tolerance:** The system must expect network links between branches, database servers or cloud resources to fail. The design should define which operations stop, which can continue, and how data is reconciled after connectivity returns.
+
+For a hospital system, patient identity, prescriptions and appointment updates require careful consistency controls. The preferred response to a partition should depend on the clinical risk of accepting potentially stale or conflicting updates. The proposed design therefore treats the primary database as the authoritative write source and requires monitoring of replica lag.
+
+**Scope of this analysis:** CAP is discussed as a design consideration. No network partition was deliberately introduced, and no CAP experiment or quantitative availability test was performed. The local streaming-replication test and the single-AZ RDS deployment are separate practical demonstrations; neither proves a particular CAP guarantee for a multi-branch production system.
+
 ### 5. Cloud Database Deployment and Scalability
 
 CareBridge can deploy its PostgreSQL database using Amazon Relational Database Service (Amazon RDS) for PostgreSQL. This portfolio includes a practical RDS deployment, described in Section 5.1, alongside the proposed architecture.

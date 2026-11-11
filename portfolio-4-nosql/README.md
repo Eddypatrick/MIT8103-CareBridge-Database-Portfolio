@@ -40,6 +40,14 @@ The `appointments` and `lab_results` fields use arrays containing embedded docum
 
 The implementation was recorded in `carebridge-nosql.js`.
 
+### Why the document model uses embedded records
+
+The patient document embeds appointment and laboratory-result subdocuments because these records relate to an individual patient and can be retrieved together with the patient's profile in this small demonstration. Embedding reduces the need for a separate lookup when the application commonly displays the patient's details and embedded information together.
+
+This is a modelling choice, not a rule that every related record must be embedded. Appointments and laboratory results can grow over time, may need to be queried independently, and may be shared with other workflows. In a larger hospital system, separate collections with patient references could be more appropriate for high-volume or independently managed records. Document size and update patterns would need to be monitored.
+
+Compared with the PostgreSQL design in Portfolios 1–3, MongoDB stores the patient and selected related information as a document, while PostgreSQL separates patients, appointments, lab orders and laboratory tests into related tables connected by keys. The relational approach provides explicit foreign-key constraints and structured joins; this MongoDB example demonstrates flexible document structure and convenient retrieval of embedded information. The two implementations illustrate alternative data models rather than claiming that the single-document MongoDB example replaces the relational hospital database.
+
 ## 5. Testing and Results
 
 The following MongoDB operations were performed:

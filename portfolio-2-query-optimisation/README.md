@@ -23,14 +23,14 @@ INNER JOIN patients AS pt
     ON a.patient_id = pt.patient_id
 INNER JOIN doctors AS d
     ON a.doctor_id = d.doctor_id
-WHERE a.appointment_datetime >= TIMESTAMP '2026-11-07 00:00:00'
-  AND a.appointment_datetime < TIMESTAMP '2026-11-08 00:00:00'
+WHERE a.appointment_datetime >= TIMESTAMPTZ '2026-11-07 00:00:00 Africa/Lagos'
+  AND a.appointment_datetime < TIMESTAMPTZ '2026-11-08 00:00:00 Africa/Lagos'
 ORDER BY a.appointment_datetime;
 ```
 
 **Further Explanation**
 
-The INNER JOIN operations connect appointment records to their corresponding patient and doctor details. The date conditions restrict the results to appointments scheduled for 7 November 2026, while ORDER BY arranges them chronologically. The query returned two appointment records.
+The INNER JOIN operations connect appointment records to their corresponding patient and doctor details. The timezone-aware lower and upper bounds restrict the results to 7 November 2026 in Africa/Lagos local time. The upper bound is exclusive, avoiding the inclusion of midnight on the following day. ORDER BY arranges the results chronologically. The query returned two appointment records.
 
 ## 3. Examining the Initial Execution Plan
 
@@ -138,6 +138,17 @@ WHERE appointment_datetime >= TIMESTAMP '2026-01-01 10:00:00'
 After creating the index, PostgreSQL selected an index scan to locate the matching appointment records. The query returned the same 12 records, with a recorded execution time of 0.130 ms.
 
 The reduction in execution time demonstrated the potential performance benefit of indexing when searching a larger dataset. Actual execution times may vary between runs due to caching and other system conditions.
+
+### 5.3 Recorded Performance Comparison
+
+| Measurement | Before index | After index |
+|---|---:|---:|
+| Execution plan | Sequential scan | Index scan |
+| Matching records | 12 | 12 |
+| Rows removed by filter | 99,988 | Not reported in the recorded result |
+| Recorded execution time | 34.923 ms | 0.130 ms |
+
+The two executions returned the same 12 matching records. The recorded time fell by approximately 99.6% in this test run. This is an observed result from the demonstration, not a guarantee for every workload. Execution time can change with caching, machine load, table size, row distribution and query selectivity.
 
 ## 6. Demonstrating a Sequential Scan
 
