@@ -24,7 +24,9 @@ flowchart TD
 
 **Figure 1: Proposed distributed and cloud database architecture for CareBridge.**
 
-The primary database handles the hospital's main transactions, while replication maintains a separate copy of the database on a standby server. The standby replica supports recovery if the primary database becomes unavailable. The architecture also provides a foundation for supporting multiple hospital branches.
+This figure represents a proposed target architecture, not the exact topology of the practical deployment. The practical work documented in this portfolio consists of two separate demonstrations: local streaming replication between two PostgreSQL instances on one computer, and a standalone Single-AZ Amazon RDS deployment. The local standby was not the standby for the RDS instance, and the local database backup was not restored into RDS.
+
+In the proposed architecture, the primary database handles the hospital's main transactions, while replication maintains a separate copy of the database on a standby server. The standby replica can support recovery if the primary database becomes unavailable. The architecture also provides a foundation for supporting multiple hospital branches.
 
 ### 3. Database Replication and Availability
 
@@ -32,9 +34,9 @@ Database replication involves maintaining copies of data across multiple databas
 
 PostgreSQL supports two major replication approaches:
 
-**Synchronous Replication:** The primary database waits for confirmation that changes have been received by the standby server before confirming a transaction. This provides stronger data consistency but may increase transaction latency.
+**Synchronous Replication:** The primary database waits for acknowledgement from the configured synchronous standby before reporting a transaction as committed. The exact acknowledgement point depends on the PostgreSQL `synchronous_commit` setting, which can be configured to wait for the standby to write, flush or apply the change. Waiting for stronger acknowledgement can reduce the risk of losing recently committed transactions during a primary failure, but may increase transaction latency and make commits depend on standby availability.
 
-**Asynchronous Replication:** The primary database confirms transactions without waiting for the standby server to acknowledge every change. This can improve transaction performance, although the replica may temporarily lag behind the primary database.
+**Asynchronous Replication:** The primary database confirms transactions without waiting for the standby server to acknowledge each change. This can improve transaction performance and avoid making every commit depend on standby acknowledgement, although the replica may temporarily lag behind the primary database and recent transactions may be lost if the primary fails before those changes reach the standby.
 
 For CareBridge, synchronous replication may be considered for critical patient and prescription records where minimising data loss is important. Asynchronous replication may be suitable where performance and network latency are greater concerns.
 
