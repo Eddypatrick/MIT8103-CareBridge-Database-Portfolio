@@ -41,8 +41,8 @@ CREATE TABLE appointments (
     appointment_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     patient_id INTEGER NOT NULL REFERENCES patients(patient_id),
     doctor_id INTEGER NOT NULL REFERENCES doctors(doctor_id),
-    appointment_datetime TIMESTAMP NOT NULL,
-    appointment_end_datetime TIMESTAMP NOT NULL,
+    appointment_datetime TIMESTAMPTZ NOT NULL,
+    appointment_end_datetime TIMESTAMPTZ NOT NULL,
     status VARCHAR(20) NOT NULL DEFAULT 'Scheduled',
     CONSTRAINT unique_doctor_appointment
         UNIQUE (doctor_id, appointment_datetime),
@@ -51,7 +51,7 @@ CREATE TABLE appointments (
     CONSTRAINT no_overlapping_patient_appointments
         EXCLUDE USING GIST (
             patient_id WITH =,
-            tsrange(appointment_datetime, appointment_end_datetime, '[)') WITH &&
+            tstzrange(appointment_datetime, appointment_end_datetime, '[)') WITH &&
         ),
     CONSTRAINT no_overlapping_doctor_appointments
         EXCLUDE USING GIST (
@@ -80,7 +80,7 @@ CREATE TABLE laborders (
     lab_order_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     patient_id INTEGER NOT NULL REFERENCES patients(patient_id),
     lab_test_id INTEGER NOT NULL REFERENCES labtests(lab_test_id),
-    order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    order_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(20) NOT NULL DEFAULT 'Pending',
     result TEXT
 );
@@ -188,8 +188,8 @@ VALUES
 INSERT INTO appointments
     (patient_id, doctor_id, appointment_datetime, appointment_end_datetime, status)
 VALUES
-    (1, 1, '2026-11-07 10:00:00', '2026-11-07 11:00:00', 'Scheduled'),
-    (2, 2, '2026-11-07 11:00:00', '2026-11-07 11:30:00', 'Scheduled');
+    (1, 1, TIMESTAMPTZ '2026-11-07 10:00:00 Africa/Lagos', TIMESTAMPTZ '2026-11-07 11:00:00 Africa/Lagos', 'Scheduled'),
+    (2, 2, TIMESTAMPTZ '2026-11-07 11:00:00 Africa/Lagos', TIMESTAMPTZ '2026-11-07 11:30:00 Africa/Lagos', 'Scheduled');
 
 -- Deferred trigger validates these prescriptions at COMMIT, after their items exist.
 INSERT INTO prescriptions (patient_id, doctor_id)
