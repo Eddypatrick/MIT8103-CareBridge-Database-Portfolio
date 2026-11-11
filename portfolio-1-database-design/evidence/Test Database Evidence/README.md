@@ -4,6 +4,8 @@ This folder contains 11 screenshots captured while testing the CareBridge Hospit
 
 The tests were carried out to verify the database structure, relationships, integrity constraints and triggers. They also checked that invalid operations were rejected and that the original sample records remained unchanged.
 
+The `carebridge_test` database contains two laboratory orders: Ada Nwosu's completed Malaria Test and Ibrahim Bello's pending Full Blood Count, whose result is `NULL`. By comparison, the main `carebridge` database contains one laboratory order, and the backup created before the timestamp migration also contains one. The pending Full Blood Count record belongs to the separate test database and is not part of the main database or its backup.
+
 ## Evidence Description
 
 | No. | Screenshot | What it demonstrates |
